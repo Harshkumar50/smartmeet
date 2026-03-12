@@ -1,0 +1,65 @@
+.booking-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.booking-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.booking-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.booking-header .sub {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.booking-card {
+  padding: 2rem;
+}
+
+.booking-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.booking-card h3 {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.slots-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.slot-btn {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.slot-btn.active {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .booking-layout {
+    grid-template-columns: 1fr;
+  }
+}
