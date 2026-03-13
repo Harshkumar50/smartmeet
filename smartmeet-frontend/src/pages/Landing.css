@@ -17,10 +17,16 @@
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #fff, #a5b4fc);
+  background: linear-gradient(135deg, #111827, var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+[data-theme="dark"] .logo {
+  color: #60a5fa;
+  background: none;
+  -webkit-text-fill-color: #60a5fa;
 }
 
 .landing-nav {

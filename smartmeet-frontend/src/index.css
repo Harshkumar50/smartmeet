@@ -1,6 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
-:root {
+/* theme variables; light is default */
+:root,
+[data-theme="light"] {
+  --bg: #f9fafb;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f0f3;
+  --border: #d1d5db;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --accent: #10b981; /* emerald */
+  --accent-hover: #14b8a6;
+  --success: #22c55e;
+  --error: #ef4444;
+  --radius: 12px;
+  --radius-lg: 20px;
+  --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+  --glow: 0 0 60px -15px rgba(16, 185, 129, 0.4);
+  --bg-grad1: rgba(16, 185, 129, 0.15);
+  --bg-grad2: rgba(6, 182, 212, 0.1);
+}
+
+[data-theme="dark"] {
   --bg: #0f0f1a;
   --bg-card: rgba(255, 255, 255, 0.03);
   --bg-card-hover: rgba(255, 255, 255, 0.06);
@@ -15,6 +36,8 @@
   --radius-lg: 24px;
   --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   --glow: 0 0 60px -15px rgba(99, 102, 241, 0.4);
+  --bg-grad1: rgba(99, 102, 241, 0.15);
+  --bg-grad2: rgba(139, 92, 246, 0.1);
 }
 
 *,
@@ -34,9 +57,17 @@ html, body, #root {
 }
 
 body {
-  background: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
-    radial-gradient(ellipse 60% 40% at 100% 100%, rgba(139, 92, 246, 0.1), transparent),
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, var(--bg-grad1), transparent),
+    radial-gradient(ellipse 60% 40% at 100% 100%, var(--bg-grad2), transparent),
     var(--bg);
+  background-size: 200% 200%;
+  animation: floaty 30s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 
 a {

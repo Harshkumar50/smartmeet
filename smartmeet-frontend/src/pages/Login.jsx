@@ -4,6 +4,7 @@ import { auth } from '../api';
 import { useAuth } from '../context/AuthContext';
 import '../App.css';
 import './Auth.css';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -32,6 +33,7 @@ export default function Login() {
     <div className="auth-page">
       <header className="auth-header">
         <Link to="/" className="logo">SmartMeet</Link>
+        <ThemeToggle />
         <Link to="/" className="btn btn-ghost">Home</Link>
       </header>
       <div className="auth-card card">

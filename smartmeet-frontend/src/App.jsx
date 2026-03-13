@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Upcoming from './pages/Upcoming';
 import CreateEvent from './pages/CreateEvent';
 import Booking from './pages/Booking';
 
@@ -16,9 +18,10 @@ function ProtectedRoute({ children }) {
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -27,6 +30,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/upcoming"
+            element={
+              <ProtectedRoute>
+                <Upcoming />
               </ProtectedRoute>
             }
           />
@@ -40,8 +51,13 @@ function App() {
           />
           <Route path="/book/:eventId" element={<Booking />} />
         </Routes>
+        {/* global footer, shown on every page */}
+        <footer className="app-footer">
+          <p>Made with <span role="img" aria-label="love">❤️</span> by Harsh</p>
+        </footer>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 

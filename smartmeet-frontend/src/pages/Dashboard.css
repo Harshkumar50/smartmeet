@@ -1,8 +1,10 @@
 .dashboard {
+  position: relative;
   min-height: 100vh;
   padding: 2rem;
   max-width: 1280px;
   margin: 0 auto;
+  overflow: hidden;
 }
 
 .dashboard-header {
@@ -35,8 +37,16 @@
   padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
   border-radius: var(--radius);
+}
+
+.banner.error {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.banner.success {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
 }
 
 .dashboard-grid {
@@ -47,6 +57,14 @@
 
 .dash-card {
   padding: 1.5rem;
+  /* subtle up/down float to evoke antigravity */
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
 }
 
 .dash-card.wide {
@@ -69,6 +87,16 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.card-item.meeting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card-item.meeting-item button {
+  margin-left: 1rem;
 }
 
 .card-item {
@@ -121,8 +149,8 @@
 }
 
 .cal-cell.booked {
-  background: rgba(34, 197, 94, 0.2);
-  border: 1px solid rgba(34, 197, 94, 0.5);
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(16, 185, 129, 0.5);
 }
 
 .stats-grid {
@@ -154,4 +182,29 @@
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* floating decorative circles for antigravity vibe */
+.floaters {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.floaters span {
+  position: absolute;
+  background: var(--accent-hover);
+  border-radius: 50%;
+  animation: drift 20s linear infinite;
+}
+
+@keyframes drift {
+  0% {transform: translateY(100vh) scale(0.3); opacity: 0;}
+  30% {opacity: 1;}
+  100% {transform: translateY(-20vh) scale(1); opacity: 0;}
 }

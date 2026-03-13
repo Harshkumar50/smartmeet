@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../components/ThemeToggle';
 import './Landing.css';
 
 export default function Landing() {
@@ -7,6 +8,7 @@ export default function Landing() {
       <header className="landing-header">
         <h1 className="logo">SmartMeet</h1>
         <nav className="landing-nav">
+          <ThemeToggle />
           <Link to="/login" className="btn btn-ghost">Login</Link>
           <Link to="/register" className="btn btn-primary">Get Started</Link>
         </nav>

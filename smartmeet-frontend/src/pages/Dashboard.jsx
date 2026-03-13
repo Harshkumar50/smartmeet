@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { events as eventsApi, bookings as bookingsApi } from '../api';
+import ThemeToggle from '../components/ThemeToggle';
 import '../App.css';
 import './Dashboard.css';
 
@@ -12,6 +13,7 @@ export default function Dashboard() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [copied, setCopied] = useState('');
 
   useEffect(() => {
     Promise.all([eventsApi.list(), bookingsApi.list()])
@@ -31,6 +33,36 @@ export default function Dashboard() {
   const now = new Date();
   const upcoming = bookings.filter((b) => b.status === 'scheduled' && new Date(b.meetingDate) >= now);
   const cancelled = bookings.filter((b) => b.status === 'cancelled');
+
+  const copyMeeting = (b) => {
+    const text = `Meeting with ${b.visitorName} on ${new Date(b.meetingDate).toLocaleString()}${
+      b.purpose ? ' – ' + b.purpose : ''
+    }`;
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setCopied('copied');
+        setTimeout(() => setCopied(''), 2000);
+      })
+      .catch(() => {});
+  };
+
+  // helper for rendering floating circles background
+  const renderFloaters = () => (
+    <div className="floaters">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <span
+          key={i}
+          style={{
+            left: `${Math.random() * 100}%`,
+            width: `${15 + Math.random() * 25}px`,
+            height: `${15 + Math.random() * 25}px`,
+            animationDelay: `${Math.random() * 10}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
 
   const copyLink = (eventId) => {
     const url = `${window.location.origin}/book/${eventId}`;
@@ -54,18 +86,22 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
+      {renderFloaters()}
       <header className="dashboard-header">
         <div>
           <h1>SmartMeet Dashboard</h1>
           <p className="subtitle">Hi {user?.name}, here’s your schedule.</p>
         </div>
         <div className="header-actions">
+          <ThemeToggle />
+          <Link to="/upcoming" className="btn btn-secondary">Upcoming</Link>
           <button className="btn btn-ghost" onClick={handleLogout}>Logout</button>
           <Link to="/create-event" className="btn btn-primary">+ Create Event</Link>
         </div>
       </header>
 
-      {error && <div className="error banner">{error}</div>}
+      {error && <div className="banner error">{error}</div>}
+      {copied && <div className="banner success">Meeting info copied to clipboard</div>}
 
       <div className="dashboard-grid">
         <div className="card dash-card">
@@ -73,9 +109,14 @@ export default function Dashboard() {
           <p className="card-desc">Your next sessions</p>
           <div className="card-list">
             {upcoming.slice(0, 5).map((b) => (
-              <div key={b._id} className="card-item">
-                <strong>{b.visitorName}</strong> • {new Date(b.meetingDate).toLocaleDateString()} at {b.meetingTime}
-                {b.purpose && <span className="muted"> — {b.purpose}</span>}
+              <div key={b._id} className="card-item meeting-item">
+                <div>
+                  <strong>{b.visitorName}</strong> • {new Date(b.meetingDate).toLocaleDateString()} at {b.meetingTime}
+                  {b.purpose && <span className="muted"> — {b.purpose}</span>}
+                </div>
+                <button className="btn btn-ghost btn-sm" onClick={() => copyMeeting(b)}>
+                  Details
+                </button>
               </div>
             ))}
             {upcoming.length === 0 && <p className="muted">No upcoming meetings</p>}
